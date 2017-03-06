@@ -26,23 +26,23 @@ public class ProductController {
         iphon.setUnitsInStock(1000);
         productDao.save(iphon);
 
-        Product tablet_Nexus = new Product();
-        tablet_Nexus.setName("Nexus");
-        tablet_Nexus.setUnitPrice(new BigDecimal(300));
-        tablet_Nexus.setDescription("Google Nexus 7 jest najlżejszym 7-calowym " +
+        Product tabletNexus = new Product();
+        tabletNexus.setName("Nexus");
+        tabletNexus.setUnitPrice(new BigDecimal(300));
+        tabletNexus.setDescription("Google Nexus 7 jest najlżejszym 7-calowym " +
                 "tabletem z 4-rdzeniowym procesorem Qualcomm Snapdragon™ S4 Pro");
-                tablet_Nexus.setCategory("Tablet");
-        tablet_Nexus.setUnitsInStock(1000);
-        productDao.save(tablet_Nexus);
+                tabletNexus.setCategory("Tablet");
+        tabletNexus.setUnitsInStock(1000);
+        productDao.save(tabletNexus);
 
-        Product laptop_dell = new Product();
-        laptop_dell.setName("Dell Inspiron");
-        laptop_dell.setUnitPrice(new BigDecimal(700));
-        laptop_dell.setDescription("Dell Inspiron, 14-calowy laptop (czarny) " +
+        Product laptopDell = new Product();
+        laptopDell.setName("Dell Inspiron");
+        laptopDell.setUnitPrice(new BigDecimal(700));
+        laptopDell.setDescription("Dell Inspiron, 14-calowy laptop (czarny) " +
                 "z procesorem Intel Core 3. generacji");
-        laptop_dell.setCategory("Laptop");
-        laptop_dell.setUnitsInStock(1000);
-        productDao.save(laptop_dell);
+        laptopDell.setCategory("Laptop");
+        laptopDell.setUnitsInStock(1000);
+        productDao.save(laptopDell);
 
         model.addAttribute("products",productDao.findAll());
 
