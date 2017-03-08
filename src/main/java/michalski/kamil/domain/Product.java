@@ -24,7 +24,16 @@ public class Product {
     private String conditions;
     private Integer unitsInStock;
     private Integer unitsInOrder;
+    private String manufacturer;
 
+
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
 
     public long getProductId() {
         return productId;
