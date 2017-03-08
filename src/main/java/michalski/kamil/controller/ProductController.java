@@ -2,17 +2,22 @@ package michalski.kamil.controller;
 
 import michalski.kamil.dao.ProductDao;
 import michalski.kamil.domain.Product;
+import michalski.kamil.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Controller
 public class ProductController {
     @Autowired
     private ProductDao productDao;
+    @Autowired
+    private ProductService productService;
 
 
     @RequestMapping("/products")
@@ -31,7 +36,7 @@ public class ProductController {
         tabletNexus.setUnitPrice(new BigDecimal(300));
         tabletNexus.setDescription("Google Nexus 7 jest najlżejszym 7-calowym " +
                 "tabletem z 4-rdzeniowym procesorem Qualcomm Snapdragon™ S4 Pro");
-                tabletNexus.setCategory("Tablet");
+        tabletNexus.setCategory("Tablet");
         tabletNexus.setUnitsInStock(1000);
         productDao.save(tabletNexus);
 
@@ -44,8 +49,15 @@ public class ProductController {
         laptopDell.setUnitsInStock(1000);
         productDao.save(laptopDell);
 
-        model.addAttribute("products",productDao.findAll());
+        model.addAttribute("products", productDao.findAll());
 
+        return "products";
+    }
+
+
+    @RequestMapping("/products/{category}")
+    public String getProductsByCategory(Model model, @PathVariable("category") String productCategory) {
+        model.addAttribute("products", productService.getProductByCategory((productCategory)));
         return "products";
     }
 }
