@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
 @Entity
 public class Product {
 
@@ -17,7 +16,7 @@ public class Product {
     @NotEmpty
     private String name;
     @NotNull
-    private BigDecimal unitPrice;
+    private Double unitPrice;
     private Boolean discontinued;
     private String description;
     private String category;
@@ -48,11 +47,11 @@ public class Product {
         this.name = name;
     }
 
-    public BigDecimal getUnitPrice() {
+    public Double getUnitPrice() {
         return unitPrice;
     }
 
-    public void setUnitPrice(BigDecimal unitPrice) {
+    public void setUnitPrice(Double unitPrice) {
         this.unitPrice = unitPrice;
     }
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -28,6 +28,12 @@
                     <p>PLN</p>
                     <p>Liczba sztuk w magazynie:</p>
                     <p th:text="${product.unitsInStock}"></p>
+                    <p>
+                        <a th:href="@{/product(id=${product.productId})}" class="btn btn-warning btn-large">
+                            <span class="glyphicon-shopping-cart glyphicon"></span>
+                            Szczegóły
+                        </a>
+                    </p>
                 </div>
                 </div>
             </div>
