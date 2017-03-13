@@ -3,28 +3,41 @@ package michalski.kamil.domain;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+
 @Entity
 public class Product {
 
     @Id
     @GeneratedValue
     private long productId;
+
     @NotEmpty
     private String name;
+
     @NotNull
     private Double unitPrice;
+
     private Boolean discontinued;
+
     private String description;
-    private String category;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
+
     private String conditions;
+
     private Integer unitsInStock;
+
     private Integer unitsInOrder;
+
     private String manufacturer;
 
+    public void setProductId(long productId) {
+        this.productId = productId;
+    }
 
     public String getManufacturer() {
         return manufacturer;
@@ -71,11 +84,11 @@ public class Product {
         this.description = description;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 

@@ -6,7 +6,6 @@ import michalski.kamil.domain.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.*;
 
 
@@ -23,7 +22,7 @@ public class ProductServiceImpl implements ProductService {
 
         Set<Product> productsByCategory = new HashSet<>();
         for (Product product : productDao.findAll()) {
-            if (category.equalsIgnoreCase(product.getCategory())) {
+            if (category.equalsIgnoreCase(product.getCategory().getName())) {
                 productsByCategory.add(product);
             }
         }
@@ -76,13 +75,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getProductsByPriceManufactureAndCategory(Map<String, List<String>> filterParams, String manufacturer,
-                                                                  String category) {
+    public Set<Product> getProductsByPriceManufactureAndCategory(Map<String, List<String>> filterParams, String manufacturer,
+                                                                 String category) {
         Set<Product> productByCategory = new HashSet<>();
         productByCategory = productService.getProductByCategory(category);
         Set<Product> productByPrice = new HashSet<>();
 
-        List<Product> sortProduct = new ArrayList<>();
+
         Set<String> criterias = filterParams.keySet();
         if (criterias.contains("low") && criterias.contains("high")) {
             for (String priceHigh : filterParams.get("high")) {
@@ -90,14 +89,14 @@ public class ProductServiceImpl implements ProductService {
                 for (String priceLow : filterParams.get("low")) {
                     int low = Integer.valueOf(priceLow);
                     for (Product product : productByCategory) {
-                        if (product.getUnitPrice() >  low && product.getUnitPrice() < high) {
+                        if (product.getUnitPrice() > low && product.getUnitPrice() < high) {
                             productByPrice.add(product);
                         }
                     }
                 }
             }
         }
-        List<Product> productBySort = new ArrayList<Product>();
+        Set<Product> productBySort = new HashSet<>();
         for (Product product : productByPrice) {
             if (manufacturer.equalsIgnoreCase(product.getManufacturer())) {
                 productBySort.add(product);
@@ -107,5 +106,10 @@ public class ProductServiceImpl implements ProductService {
 
 
         return productBySort;
+    }
+
+    @Override
+    public void addProduct(Product product) {
+        productDao.save(product);
     }
 }

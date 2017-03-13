@@ -13,6 +13,7 @@ public class Customer {
     private long customerId;
 
     private String name;
+
     private String adress;
 
     private String noOfOrdersMade;

@@ -1,14 +1,14 @@
 package michalski.kamil.controller;
 
 
+import michalski.kamil.domain.Product;
+import michalski.kamil.service.CategoryService;
 import michalski.kamil.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.MatrixVariable;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -17,6 +17,8 @@ import java.util.Map;
 public class ProductController {
     @Autowired
     private ProductService productService;
+    @Autowired
+    private CategoryService categoryService;
 
 
     @RequestMapping("/products")
@@ -55,5 +57,26 @@ public class ProductController {
         model.addAttribute("products", productService.getProductsByPriceManufactureAndCategory(filterParams,
                 manufacturer, productCategory));
         return "/products";
+    }
+
+
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    public String getAddNewProductForm(Model model) {
+
+        Product product = new Product();
+        model.addAttribute("categories", categoryService.getAllCategory());
+        model.addAttribute("product", product);
+        return "addProduct";
+    }
+
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public String processAddNewProductForm(@ModelAttribute Product product) {
+        productService.addProduct(product);
+        return "redirect:/products";
+    }
+
+    @InitBinder
+    public void initialiseBinder(WebDataBinder binder) {
+        binder.setDisallowedFields("unitsInOrder", "discontinued", "conditions");
     }
 }
