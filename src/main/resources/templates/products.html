@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -20,8 +20,9 @@
 <section class="container">
     <div class="row">
         <div class="col-sm-6 col-md-3" style="padding-bottom: 15px" th:each="product : ${products}">
-            <div class="thumbnail" >
-                <div class="caption" >
+            <div class="thumbnail">
+                <img th:src="@{'/resources/images/'+${product.name}+'.png'}" class="img-responsive" alt="image" style = "width:100%"/>
+                <div class="caption">
                     <h3 th:text="${product.name}"></h3>
                     <p th:text="${product.description}"></p>
                     <p th:text="${product.unitPrice}"></p>
@@ -35,9 +36,9 @@
                         </a>
                     </p>
                 </div>
-                </div>
             </div>
         </div>
+    </div>
 </section>
 
 </body>

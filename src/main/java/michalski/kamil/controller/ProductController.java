@@ -9,7 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -70,13 +73,25 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String processAddNewProductForm(@ModelAttribute Product product) {
+    public String processAddNewProductForm(@ModelAttribute Product product,
+                                           HttpServletRequest httpServletRequest) {
+        CommonsMultipartFile productImage = product.getProductImage();
+        String rootDirectory = httpServletRequest.getSession().getServletContext().getRealPath("/");
+        if (productImage != null && !productImage.isEmpty()) {
+            try {
+                productImage.transferTo(new File(rootDirectory + "resources\\images\\" + product.getName() +
+                        ".png"));
+            } catch (Exception e) {
+                throw new RuntimeException("Niepowodzenie podczas próby zapisu obrazka produktu", e);
+            }
+        }
         productService.addProduct(product);
         return "redirect:/products";
     }
 
+
     @InitBinder
     public void initialiseBinder(WebDataBinder binder) {
-        binder.setDisallowedFields("unitsInOrder", "discontinued", "conditions");
+        binder.setDisallowedFields("unitsInOrder", "discontinued", "conditions", "productImage");
     }
 }

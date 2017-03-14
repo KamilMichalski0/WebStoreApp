@@ -2,6 +2,8 @@ package michalski.kamil.domain;
 
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -34,6 +36,22 @@ public class Product {
     private Integer unitsInOrder;
 
     private String manufacturer;
+
+    @Transient
+    private CommonsMultipartFile productImage;
+
+    public CommonsMultipartFile getProductImage() {
+        return productImage;
+    }
+
+    public void setProductImage(CommonsMultipartFile productImage) {
+        this.productImage = productImage;
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 
     public void setProductId(long productId) {
         this.productId = productId;
